@@ -15,4 +15,6 @@ until php artisan migrate --force; do
   sleep 2
 done
 php artisan library:bootstrap-admin
-exec php artisan serve --host=0.0.0.0 --port=8000
+# El servidor embebido de PHP hereda el entorno (artisan serve lo filtra).
+cd public
+exec php -S 0.0.0.0:8000 ../vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php
