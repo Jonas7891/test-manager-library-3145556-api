@@ -1,50 +1,64 @@
 # test-manager-library-3145556-api
 
-> **Prueba técnica · Ficha ADSO 3145556**
-> Entrega: **martes 13 de octubre de 2026, a las 5:00 p. m.** (17:00, hora Colombia).
+> **Prueba técnica · Ficha ADSO 3145556**: backend de *Manager Library* en **PHP 8.4 + Laravel 13**, con arquitectura hexagonal.
+> Spec: `test-manager-library-3145556-docs` (`spec-python/`, y la traducción a este stack en `spec-laravel/`).
 
-Este repositorio es el **backend** de *Manager Library*, en **PHP con Laravel**. **Empieza vacío a propósito**: se construye en el fork de cada aprendiz.
+## Arquitectura (artículos I a III)
 
-## Instrucciones
+```text
+app/
+├── Domain/          PHP puro: Book, Loan, LoanItem, Member, User, objetos de valor y errores de negocio
+├── Application/     Ports/ (interfaces que la aplicación define) y Services/ (un caso de uso por clase)
+├── Adapters/
+│   ├── Inbound/Http/   controladores, middleware JWT y de rol, ErrorRenderer (cuerpo de error único), Presenter
+│   └── Outbound/       Persistence/ (PostgreSQL), Security/ (Argon2id, JWT), Storage/ (portadas), Clock/
+├── Bootstrap/       PortBindingsServiceProvider: ÚNICO punto de composición
+└── Console/         library:bootstrap-admin (admin inicial desde el entorno)
+database/migrations/ todo el DDL (ADR-001): esquema library, 6 tablas, CHECK, índices parciales y la semilla de categorías
+```
 
-Cada aprendiz debe **crear el fork** de los seis repositorios del proyecto y **resolver el proyecto
-con el spec planteado**.
+No se usa Eloquent ni Sanctum: sus convenciones (`created_at`, ids autoincrementales, tabla de tokens) contradicen `data-model.md`.
 
-1. Hacer fork, a su cuenta de GitHub, de cada repositorio de la tabla del final.
-2. Leer el spec en [`test-manager-library-3145556-docs`](https://github.com/code-sena/test-manager-library-3145556-docs).
-   Se entrega en dos versiones: `spec-python/` y `spec-.net/`.
-3. Desarrollar en los forks.
+## Cómo se corre
 
-## El reto se desarrolla con React y PHP (Laravel)
+Con todo el sistema: ver `test-manager-library-3145556-infra` (`docker compose up -d --build`). La API queda en
+`http://localhost:8000/api/v1`; al arrancar corre las migraciones y crea el admin desde `ADMIN_USERNAME` / `ADMIN_PASSWORD`.
 
-El spec está escrito para Python y para .NET, pero el reto **no** se hace en esos lenguajes:
+## Cómo se prueba (evidencia)
 
-| Capa | Tecnología del reto |
+```bash
+docker compose -f docker-compose.test.yml run --rm --build tests
+```
+
+Levanta un PostgreSQL 16 efímero y corre las **59 pruebas** (387 aserciones):
+
+| Suite | Qué prueba | Tareas |
+|---|---|---|
+| `tests/Unit/Domain` | Invariantes: ISBN, cantidades, 14 días, máximo 3, estado calculado, devolución doble | T-03…T-06 |
+| `tests/Unit/Application` | Casos de uso contra fakes en memoria (`tests/Fakes`) | T-07…T-11 |
+| `tests/Unit/Architecture` | El dominio no importa nada; la aplicación solo conoce el dominio; composición única | T-19 |
+| `tests/Feature/*ContractTest` | Todas las rutas del contrato, códigos de error y cuerpo único contra PostgreSQL real | T-12, T-16, T-17 |
+| `tests/Feature/ConcurrencyTest` | Último ejemplar: un préstamo gana y el otro recibe `BOOK_NOT_AVAILABLE` | T-13, RNF-2 |
+| `tests/Feature/DatabaseInvariantsTest` | `CHECK` del motor, FK `RESTRICT`, ninguna columna con `DEFAULT` | T-02, T-18 |
+
+## Mapa de historias a pruebas
+
+| HU | Prueba principal |
 |---|---|
-| Frontend | React |
-| Backend | PHP con Laravel |
+| HU-01 Login | `AuthAndCatalogContractTest::test_login_hu_01`, `test_token_and_role_are_enforced_ca_01_3` |
+| HU-02 Bibliotecarios | `test_create_librarian_hu_02` |
+| HU-03 / HU-04 Libros | `test_books_crud_and_search_hu_03_hu_04`, `test_cover_upload_validates_type_and_size_ca_03_4` |
+| HU-05 Socios | `test_members_hu_05` |
+| HU-06 / HU-07 Préstamo y devolución | `LoansContractTest::test_lend_and_return_hu_06_hu_07`, `test_lending_rules_ca_06_2_ca_06_4` |
+| HU-08 / HU-09 Listado y vencidos | `test_overdue_blocks_and_lists_ca_06_5_hu_09` |
+| HU-10 Reporte | `test_report_is_frozen_and_admin_only_hu_10` |
 
-Lo que el spec define sobre el negocio —historias, criterios de aceptación, reglas, contrato de la
-API, modelo de datos— se respeta. Lo que define sobre la tecnología se traduce a React y Laravel.
+## Configuración
 
-## La prueba no consiste en escribir el código
+Ver `.env.example`. Ningún secreto tiene valor por defecto ni se versiona (Art. IX). `JWT_SECRET` debe tener al menos 32 caracteres.
+`CLOCK_OFFSET_DAYS` vale 0; solo se cambia para la fase de demostración del sembrador (ADR-006).
 
-El propósito principal es ver la **capacidad de desempeño con SDD** (*Spec-Driven Development*,
-desarrollo guiado por especificación): cómo se lee, se interpreta y se aplica una especificación
-para llevarla a un stack distinto. El código es el medio, no el fin.
+## Nota sobre portadas
 
-## Entrega
-
-Cuenta lo que quede **subido a los forks antes de las 5:00 p. m.** (17:00). Lo que llegue después no se revisa.
-No hay prórroga: suban avances parciales con commits pequeños durante la prueba.
-
-## Los seis repositorios
-
-| Repositorio | Qué va ahí |
-|---|---|
-| [`test-manager-library-3145556-docs`](https://github.com/code-sena/test-manager-library-3145556-docs) | El spec: `spec-python/` y `spec-.net/` |
-| [`test-manager-library-3145556-api`](https://github.com/code-sena/test-manager-library-3145556-api) | Backend en PHP (Laravel) |
-| [`test-manager-library-3145556-app`](https://github.com/code-sena/test-manager-library-3145556-app) | Frontend en React |
-| [`test-manager-library-3145556-page`](https://github.com/code-sena/test-manager-library-3145556-page) | Sitio público estático de presentación |
-| [`test-manager-library-3145556-infra`](https://github.com/code-sena/test-manager-library-3145556-infra) | Contenedores, red, volúmenes y motor de base de datos vacío |
-| [`test-manager-library-3145556-tool`](https://github.com/code-sena/test-manager-library-3145556-tool) | Utilidades: sembrador de datos de demostración |
+PHP no interpreta `multipart/form-data` en un `PUT` real. Para `PUT /books/{id}/cover` el cliente envía `POST` con el campo
+`_method=PUT` (suplantación de método de Laravel); la ruta del contrato se mantiene.
