@@ -1,0 +1,15 @@
+#!/bin/sh
+# Arranque: migraciones (dueñas del esquema, ADR-001) -> admin inicial (D-10) -> servidor.
+set -e
+
+if [ "$1" = "test" ]; then
+  shift
+  exec php artisan test "$@"
+fi
+
+until php artisan migrate --force; do
+  echo "Esperando la base de datos..."
+  sleep 2
+done
+php artisan library:bootstrap-admin
+exec php artisan serve --host=0.0.0.0 --port=8000
