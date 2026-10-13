@@ -1,0 +1,26 @@
+# Pruebas con PostgreSQL real y efímero (plan §3):
+#   docker compose -f docker-compose.test.yml run --rm --build tests
+services:
+  test-db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: library_test
+      POSTGRES_USER: library
+      POSTGRES_PASSWORD: library-test
+    tmpfs: [/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U library -d library_test"]
+      interval: 2s
+      retries: 30
+
+  tests:
+    build: .
+    command: ["test"]
+    depends_on:
+      test-db:
+        condition: service_healthy
+    environment:
+      DB_HOST: test-db
+      DB_DATABASE: library_test
+      DB_USERNAME: library
+      DB_PASSWORD: library-test
