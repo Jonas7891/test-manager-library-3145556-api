@@ -82,6 +82,12 @@ final class AuthAndCatalogContractTest extends ApiTestCase
         $res = $this->call('POST', "/api/v1/books/{$id}/cover", ['_method' => 'PUT'], [], ['file' => $fakeJpg], $this->transformHeadersToServerVars($admin));
         $this->assertErrorBody($res, 422, 'VALIDATION_ERROR');
 
+        $twoMb = \Illuminate\Http\UploadedFile::fake()->createWithContent('justa.png', "\x89PNG\r\n\x1a\n".str_repeat('a', 2 * 1024 * 1024 - 8));
+        $this->call('POST', "/api/v1/books/{$id}/cover", ['_method' => 'PUT'], [], ['file' => $twoMb], $this->transformHeadersToServerVars($admin))->assertOk();
+        $threeMb = \Illuminate\Http\UploadedFile::fake()->createWithContent('grande.png', "\x89PNG\r\n\x1a\n".str_repeat('a', 3 * 1024 * 1024));
+        $res = $this->call('POST', "/api/v1/books/{$id}/cover", ['_method' => 'PUT'], [], ['file' => $threeMb], $this->transformHeadersToServerVars($admin));
+        $this->assertErrorBody($res, 422, 'VALIDATION_ERROR');
+
         $this->deleteJson("/api/v1/books/{$id}/cover", [], $admin)->assertNoContent();
         $this->getJson("/api/v1/books/{$id}", $admin)->assertJsonPath('cover_key', null);
     }
