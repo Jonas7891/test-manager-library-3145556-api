@@ -4,8 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
 /**
- * T-02: las seis tablas de data-model.md §3, con las restricciones de §4, las FK de §5 y la
- * semilla de §9. SQL explícito para controlar CHECK, índices parciales y la ausencia de DEFAULT.
+ * T-02: the six tables of data-model.md §3, with the constraints of §4, the FKs of §5 and the
+ * seed of §9. Explicit SQL to control CHECKs, partial indexes and the absence of DEFAULT.
  */
 return new class extends Migration
 {

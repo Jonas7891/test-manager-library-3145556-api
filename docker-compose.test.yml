@@ -1,4 +1,4 @@
-# Pruebas con PostgreSQL real y efímero (plan §3):
+# Tests against a real, throwaway PostgreSQL (plan §3):
 #   docker compose -f docker-compose.test.yml run --rm --build tests
 services:
   test-db:

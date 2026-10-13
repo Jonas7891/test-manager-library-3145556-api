@@ -26,7 +26,7 @@ final class LoginService
         } catch (ValidationFailed) {
             $user = null;
         }
-        // CA-01.2: el mismo error si falla el usuario o la clave.
+        // CA-01.2: the same error whether the username or the password is wrong.
         if ($user === null || ! $this->hasher->verify($password, $user->passwordHash)) {
             throw new InvalidCredentials();
         }

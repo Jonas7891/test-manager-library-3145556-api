@@ -6,7 +6,7 @@ use App\Adapters\Inbound\Http\AccessDenied;
 use Closure;
 use Illuminate\Http\Request;
 
-/** Autorización por rol en cada endpoint; un 403 no revela si el recurso existe. */
+/** Role authorization on every endpoint; a 403 does not reveal whether the resource exists. */
 final class RequireRole
 {
     public function handle(Request $request, Closure $next, string ...$roles)

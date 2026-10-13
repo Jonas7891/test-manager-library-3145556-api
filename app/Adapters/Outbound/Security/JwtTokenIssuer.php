@@ -6,7 +6,7 @@ use App\Application\Ports\TokenIssuer;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-/** D-11 / ADR-007: JWT HS256 de 8 horas con `sub` y `role`; sin datos personales. */
+/** D-11 / ADR-007: 8-hour HS256 JWT with `sub` and `role`; no personal data. */
 final class JwtTokenIssuer implements TokenIssuer
 {
     public function __construct(private readonly string $secret) {}

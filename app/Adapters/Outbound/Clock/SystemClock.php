@@ -6,7 +6,7 @@ use App\Application\Ports\Clock;
 use DateTimeImmutable;
 use DateTimeZone;
 
-/** D-05 y ADR-006: hora UTC real, con desplazamiento opcional en días (0 por defecto). */
+/** D-05 and ADR-006: real UTC time, with an optional shift in days (0 by default). */
 final class SystemClock implements Clock
 {
     public function __construct(private readonly int $offsetDays = 0) {}

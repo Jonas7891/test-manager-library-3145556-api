@@ -6,8 +6,8 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
- * T-19: artículos I, II y III de la constitución, verificados leyendo los `use` del código.
- * Falla si alguien introduce una importación prohibida.
+ * T-19: constitution articles I, II and III, checked by reading the code's `use` statements.
+ * It fails if someone adds a forbidden import.
  */
 final class LayersTest extends TestCase
 {
@@ -24,7 +24,7 @@ final class LayersTest extends TestCase
         return $files;
     }
 
-    /** @return list<string> clases importadas con `use` (incluye `use function`) */
+    /** @return list<string> classes imported with `use` (including `use function`) */
     private static function imports(string $file): array
     {
         preg_match_all('/^use\s+(?:function\s+)?([^;]+);/m', file_get_contents($file), $m);
@@ -32,7 +32,7 @@ final class LayersTest extends TestCase
         return $m[1];
     }
 
-    /** @return list<string> importaciones que no están permitidas */
+    /** @return list<string> imports that are not allowed */
     public static function violations(string $dir, array $allowedPrefixes): array
     {
         $bad = [];

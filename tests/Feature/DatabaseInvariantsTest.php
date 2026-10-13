@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 
-/** T-18 y ADR-003: lo que el motor puede imponer, lo impone (Art. VI). */
+/** T-18 and ADR-003: whatever the engine can enforce, it enforces (Art. VI). */
 final class DatabaseInvariantsTest extends ApiTestCase
 {
     public function test_total_copies_must_be_positive_in_the_engine(): void

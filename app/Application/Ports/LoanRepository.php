@@ -10,17 +10,17 @@ use DateTimeImmutable;
 interface LoanRepository
 {
     /**
-     * Vencimientos de las líneas sin devolver de un socio (Q7).
+     * Due dates of a member's unreturned lines (Q7).
      *
      * @return list<DateTimeImmutable>
      */
     public function unreturnedDueDatesOfMember(string $memberId): array;
 
     /**
-     * Guarda el préstamo y descuenta los ejemplares en UNA transacción. Cada libro se escribe solo si
-     * sus disponibles siguen siendo los leídos (ADR-005); si no, revierte todo y lanza BookNotAvailable.
+     * Saves the loan and decrements the copies in ONE transaction. Each book is written only if
+     * its available copies are still the ones read (ADR-005); otherwise it rolls back and throws BookNotAvailable.
      *
-     * @param  array<string, int>  $expectedAvailable  book_id => disponibles leídos antes de descontar
+     * @param  array<string, int>  $expectedAvailable  book_id => available copies read before decrementing
      * @param  list<Book>  $books  libros ya descontados
      */
     public function saveNew(Loan $loan, array $books, array $expectedAvailable): void;
@@ -28,14 +28,14 @@ interface LoanRepository
     public function find(string $id): ?Loan;
 
     /**
-     * Marca la línea devuelta y suma 1 al libro en una transacción; solo si seguía sin devolver.
-     * Lanza ItemAlreadyReturned si otra petición ganó.
+     * Marks the line as returned and adds 1 to the book in one transaction, only if it was still unreturned.
+     * Throws ItemAlreadyReturned if another request won.
      */
     public function markReturned(string $loanId, string $itemId, string $bookId, DateTimeImmutable $at): void;
 
-    /** Q6: filtros `from`, `to` (fechas), `status`, `member_id`; orden por fecha descendente. */
+    /** Q6: filters `from`, `to` (dates), `status`, `member_id`; newest first. */
     public function search(array $filters, DateTimeImmutable $now, int $page, int $size): Page;
 
-    /** Q8: líneas vencidas, más días de retraso primero. */
+    /** Q8: overdue lines, most days late first. */
     public function overdue(DateTimeImmutable $now, int $page, int $size): Page;
 }

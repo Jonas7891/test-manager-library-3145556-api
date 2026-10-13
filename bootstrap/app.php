@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         apiPrefix: 'api/v1',
         commands: __DIR__.'/../routes/console.php',
         then: function () {
-            // H-02: /health también fuera del prefijo, como pide T-01.
+            // H-02: /health is also served outside the prefix, as T-01 asks.
             Route::get('/health', [AuthController::class, 'health']);
         },
     )
@@ -26,7 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        // RNF-4: un único cuerpo de error para todo, sin trazas.
+        // RNF-4: a single error body for everything, with no stack traces.
         $exceptions->dontReport([\App\Domain\Exceptions\DomainError::class, \App\Adapters\Inbound\Http\AccessDenied::class]);
         $exceptions->render(fn (\Throwable $e) => ErrorRenderer::render($e));
     })->create();

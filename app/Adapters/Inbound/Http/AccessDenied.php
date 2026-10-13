@@ -2,7 +2,7 @@
 
 namespace App\Adapters\Inbound\Http;
 
-/** 401 sin token / token inválido y 403 rol insuficiente (CA-01.3). */
+/** 401 for a missing or invalid token and 403 for an insufficient role (CA-01.3). */
 final class AccessDenied extends \RuntimeException
 {
     public function __construct(public readonly int $status, public readonly string $errorCode, string $message)

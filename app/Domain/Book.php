@@ -23,13 +23,13 @@ final class Book
         public ?DateTimeImmutable $deletedAt = null,
     ) {}
 
-    /** CA-03.1: los disponibles arrancan iguales al total. */
+    /** CA-03.1: available copies start equal to the total. */
     public static function create(string $title, string $author, Isbn $isbn, string $categoryId, Quantity $total): self
     {
         return new self(Uuid::v4(), self::cleanTitle($title), self::cleanAuthor($author), $isbn, $categoryId, $total->value, $total->value);
     }
 
-    /** CA-03.3: cambiar el total ajusta los disponibles en la misma diferencia, nunca por debajo de 0. */
+    /** CA-03.3: changing the total moves the available copies by the same difference, never below 0. */
     public function update(string $title, string $author, string $categoryId, Quantity $total): void
     {
         $available = $this->availableCopies + ($total->value - $this->totalCopies);
@@ -63,7 +63,7 @@ final class Book
         $this->availableCopies++;
     }
 
-    /** CA-03.5 / ADR-003: baja lógica, prohibida con préstamos abiertos. */
+    /** CA-03.5 / ADR-003: soft delete, forbidden while loans are open. */
     public function delete(DateTimeImmutable $now, bool $hasOpenLoans): void
     {
         if ($hasOpenLoans) {

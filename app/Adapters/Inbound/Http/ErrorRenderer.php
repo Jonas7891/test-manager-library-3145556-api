@@ -13,8 +13,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 /**
- * Único traductor de errores a HTTP (architecture §5, RNF-4):
- * todo error sale como { code, message, details } sin trazas, SQL ni rutas.
+ * The only translator from errors to HTTP (architecture §5, RNF-4):
+ * every error leaves as { code, message, details }, with no traces, SQL or paths.
  */
 final class ErrorRenderer
 {

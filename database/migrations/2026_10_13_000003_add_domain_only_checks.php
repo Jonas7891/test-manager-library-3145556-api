@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
 /**
- * T-18 (Art. VI): las dos invariantes marcadas "pendiente" en data-model.md §4 pasan al motor.
+ * T-18 (Art. VI): the two invariants marked "pending" in data-model.md §4 move into the engine.
  */
 return new class extends Migration
 {

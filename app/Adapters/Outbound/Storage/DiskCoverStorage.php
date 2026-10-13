@@ -5,7 +5,7 @@ namespace App\Adapters\Outbound\Storage;
 use App\Application\Ports\CoverStorage;
 use App\Domain\Uuid;
 
-/** D-08: portadas en disco; la clave es opaca (uuid.ext), nunca una ruta. */
+/** D-08: covers on disk; the key is opaque (uuid.ext), never a path. */
 final class DiskCoverStorage implements CoverStorage
 {
     public function __construct(private readonly string $dir) {}

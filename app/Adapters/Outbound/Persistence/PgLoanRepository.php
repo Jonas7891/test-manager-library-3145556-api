@@ -31,7 +31,7 @@ final class PgLoanRepository implements LoanRepository
     {
         DB::transaction(function () use ($loan, $books, $expectedAvailable) {
             foreach ($books as $book) {
-                // ADR-005: los disponibles leídos son el testigo de concurrencia.
+                // ADR-005: the available copies read earlier are the concurrency token.
                 $affected = DB::table('book')
                     ->where('id', $book->id)
                     ->where('available_copies', $expectedAvailable[$book->id])
@@ -99,7 +99,7 @@ final class PgLoanRepository implements LoanRepository
         if (! empty($filters['member_id'])) {
             $query->where('l.member_id', $filters['member_id']);
         }
-        // H-10: el estado se calcula, no se almacena.
+        // H-10: the status is computed, never stored.
         $pending = 'select 1 from loan_item p where p.loan_id = l.id and p.returned_at is null';
         $late = $pending.' and p.due_at < ?';
         match ($filters['status'] ?? null) {

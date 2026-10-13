@@ -4,7 +4,7 @@ namespace App\Application\Ports;
 
 interface CoverStorage
 {
-    /** Guarda el binario y devuelve una clave opaca. */
+    /** Stores the binary and returns an opaque key. */
     public function put(string $bytes, string $extension): string;
 
     public function get(string $key): ?string;

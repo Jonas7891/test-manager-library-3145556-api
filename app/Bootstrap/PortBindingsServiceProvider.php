@@ -23,8 +23,8 @@ use App\Application\Ports\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Artículo III: el ÚNICO lugar donde un puerto se encuentra con su adaptador.
- * Fuera de aquí no se instancia infraestructura.
+ * Article III: the ONLY place where a port meets its adapter.
+ * No infrastructure is instantiated outside this class.
  */
 final class PortBindingsServiceProvider extends ServiceProvider
 {

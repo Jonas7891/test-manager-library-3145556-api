@@ -19,7 +19,7 @@ use App\Domain\User;
 use App\Domain\ValueObjects\DateRange;
 use DateTimeImmutable;
 
-/** Fakes en memoria de los puertos (LSP): los casos de uso se prueban sin base ni framework. */
+/** In-memory fakes of the ports (LSP): use cases are tested with no database or framework. */
 final class InMemory
 {
     public FakeClock $clock;

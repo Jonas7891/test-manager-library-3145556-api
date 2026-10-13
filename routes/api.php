@@ -24,7 +24,7 @@ Route::middleware('jwt')->group(function () {
         Route::post('/books', [BookController::class, 'store']);
         Route::put('/books/{id}', [BookController::class, 'update']);
         Route::delete('/books/{id}', [BookController::class, 'destroy']);
-        // PHP no lee multipart en PUT real: el cliente envía POST con _method=PUT (H-17)
+        // PHP does not parse multipart on a real PUT: the client sends POST with _method=PUT (H-17)
         Route::put('/books/{id}/cover', [BookController::class, 'uploadCover']);
         Route::delete('/books/{id}/cover', [BookController::class, 'removeCover']);
     });
@@ -34,7 +34,7 @@ Route::middleware('jwt')->group(function () {
         Route::get('/members/{id}', [MemberController::class, 'show']);
         Route::post('/members', [MemberController::class, 'store']);
 
-        // H-04: overdue antes de {id}
+        // H-04: overdue before {id}
         Route::get('/loans/overdue', [LoanController::class, 'overdue']);
         Route::post('/loans', [LoanController::class, 'store']);
         Route::get('/loans', [LoanController::class, 'index']);

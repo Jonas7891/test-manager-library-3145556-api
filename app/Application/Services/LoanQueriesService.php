@@ -9,7 +9,7 @@ use App\Domain\Exceptions\NotFound;
 use App\Domain\Loan;
 use DateTimeImmutable;
 
-/** HU-08 y HU-09: consultas de préstamos (solo lectura). */
+/** HU-08 and HU-09: loan queries (read only). */
 final class LoanQueriesService
 {
     public function __construct(

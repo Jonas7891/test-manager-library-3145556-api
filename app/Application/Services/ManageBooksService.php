@@ -11,7 +11,7 @@ use App\Domain\Exceptions\ValidationFailed;
 use App\Domain\ValueObjects\Isbn;
 use App\Domain\ValueObjects\Quantity;
 
-/** HU-03: alta, edición y baja lógica de libros (solo admin). */
+/** HU-03: create, edit and soft-delete books (admin only). */
 final class ManageBooksService
 {
     public function __construct(

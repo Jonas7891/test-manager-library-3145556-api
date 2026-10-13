@@ -6,7 +6,7 @@ use App\Domain\Exceptions\InvalidDateRange;
 use DateTimeImmutable;
 use DateTimeZone;
 
-/** Rango de fechas, ambos extremos inclusive, interpretado en UTC (H-11). */
+/** Date range, both ends inclusive, read in UTC (H-11). */
 final class DateRange
 {
     public function __construct(public readonly DateTimeImmutable $from, public readonly DateTimeImmutable $to)
@@ -26,7 +26,7 @@ final class DateRange
         );
     }
 
-    /** Primer instante fuera del rango: el día siguiente a `to` a las 00:00Z. */
+    /** First instant outside the range: the day after `to` at 00:00Z. */
     public function endExclusive(): DateTimeImmutable
     {
         return $this->to->modify('+1 day');

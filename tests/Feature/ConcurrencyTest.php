@@ -9,8 +9,8 @@ use App\Domain\Loan;
 use Illuminate\Support\Facades\DB;
 
 /**
- * RNF-2 / ADR-005: dos bibliotecarios prestan el ÚLTIMO ejemplar a la vez.
- * Se reproduce el entrelazado: B lee el libro, A presta y confirma, B intenta guardar con lo leído.
+ * RNF-2 / ADR-005: two librarians lend the LAST copy at the same time.
+ * It replays the interleaving: B reads the book, A lends and commits, B tries to save with what it read.
  */
 final class ConcurrencyTest extends ApiTestCase
 {
@@ -21,7 +21,7 @@ final class ConcurrencyTest extends ApiTestCase
         $memberA = $this->member($admin, 'A-1');
         $memberB = $this->member($admin, 'B-1');
 
-        // B lee el libro: available_copies = 1.
+        // B reads the book: available_copies = 1.
         $books = $this->app->make(BookRepository::class);
         $staleForB = $books->findMany([$bookId]);
         $expectedB = [$bookId => $staleForB[$bookId]->availableCopies];
@@ -29,7 +29,7 @@ final class ConcurrencyTest extends ApiTestCase
         // A presta y gana.
         $this->postJson('/api/v1/loans', ['member_id' => $memberA, 'items' => [['book_id' => $bookId]]], $admin)->assertCreated();
 
-        // B guarda con lo que leyó: el testigo ya no coincide.
+        // B saves with what it read: the token no longer matches.
         $loanB = Loan::open($memberB, 'user', [$bookId], $staleForB, [self::NOVELA => 'Novela'], [], new \DateTimeImmutable());
         try {
             $this->app->make(LoanRepository::class)->saveNew($loanB, array_values($staleForB), $expectedB);

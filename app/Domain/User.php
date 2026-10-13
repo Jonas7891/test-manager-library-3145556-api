@@ -20,7 +20,7 @@ final class User
         }
     }
 
-    /** CA-02.2: minúsculas y recortado. */
+    /** CA-02.2: lower-cased and trimmed. */
     public static function normalizeUsername(string $username): string
     {
         $username = mb_strtolower(trim($username));
@@ -31,7 +31,7 @@ final class User
         return $username;
     }
 
-    /** CA-02.3: por la API solo se crean bibliotecarios. */
+    /** CA-02.3: the API only creates librarians. */
     public static function createLibrarian(string $username, string $role, string $passwordHash): self
     {
         if ($role !== self::LIBRARIAN) {
@@ -41,7 +41,7 @@ final class User
         return new self(Uuid::v4(), self::normalizeUsername($username), $passwordHash, self::LIBRARIAN);
     }
 
-    /** D-10: el admin inicial lo crea el arranque desde el entorno, nunca la API. */
+    /** D-10: startup creates the initial admin from the environment, never the API. */
     public static function createAdmin(string $username, string $passwordHash): self
     {
         return new self(Uuid::v4(), self::normalizeUsername($username), $passwordHash, self::ADMIN);

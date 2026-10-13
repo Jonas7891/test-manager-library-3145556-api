@@ -26,13 +26,13 @@ final class Loan
     ) {}
 
     /**
-     * HU-06. Las reglas del socio se comprueban antes de tocar ejemplares; cada línea
-     * descuenta su ejemplar en la misma operación que la crea (Book::withdraw).
+     * HU-06. Member rules are checked before touching any copy; each line
+     * takes its copy in the same operation that creates it (Book::withdraw).
      *
      * @param  list<string>  $requestedBookIds  ids pedidos, en orden (puede traer repetidos)
-     * @param  array<string, Book>  $books  libros activos encontrados, por id
+     * @param  array<string, Book>  $books  active books found, by id
      * @param  array<string, string>  $categoryNames  category_id => nombre
-     * @param  list<DateTimeImmutable>  $memberUnreturnedDueDates  vencimientos de las líneas sin devolver del socio
+     * @param  list<DateTimeImmutable>  $memberUnreturnedDueDates  due dates of the member's unreturned lines
      */
     public static function open(
         string $memberId,

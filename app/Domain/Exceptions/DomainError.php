@@ -3,8 +3,8 @@
 namespace App\Domain\Exceptions;
 
 /**
- * Base de los errores de negocio. El código coincide con api-contract.md §2;
- * el estado HTTP lo decide solo el adaptador HTTP.
+ * Base of the business errors. The code matches api-contract.md §2;
+ * only the HTTP adapter decides the HTTP status.
  */
 class DomainError extends \RuntimeException
 {

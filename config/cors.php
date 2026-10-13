@@ -1,6 +1,6 @@
 <?php
 
-// api-contract §4: solo el origen del frontend configurado por entorno.
+// api-contract §4: only the frontend origin set in the environment.
 return [
     'paths' => ['api/*', 'health'],
     'allowed_methods' => ['*'],

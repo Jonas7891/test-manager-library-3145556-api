@@ -6,7 +6,7 @@ use App\Application\Ports\ReportReader;
 use App\Domain\ValueObjects\DateRange;
 use Illuminate\Support\Facades\DB;
 
-/** ADR-004: una sola consulta agregada sobre los valores congelados; sin socios ni bibliotecarios. */
+/** ADR-004: one aggregate query over the frozen values; no members or librarians. */
 final class PgReportReader implements ReportReader
 {
     public function mostBorrowed(DateRange $range): array

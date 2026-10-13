@@ -7,7 +7,7 @@ use App\Application\Ports\CoverStorage;
 use App\Domain\Exceptions\NotFound;
 use App\Domain\Exceptions\ValidationFailed;
 
-/** CA-03.4: portada JPG/PNG de máximo 2 MB; la base guarda solo una clave opaca. */
+/** CA-03.4: JPG/PNG cover of at most 2 MB; the database stores only an opaque key. */
 final class BookCoverService
 {
     public const MAX_BYTES = 2 * 1024 * 1024;
@@ -36,7 +36,7 @@ final class BookCoverService
         return $book->coverKey;
     }
 
-    /** data-model §7: primero se anula cover_key y se confirma; después se borra el binario. */
+    /** data-model §7: first clear cover_key and commit; then delete the binary. */
     public function remove(string $bookId): void
     {
         $book = $this->books->find($bookId) ?? throw new NotFound('El libro');
@@ -60,7 +60,7 @@ final class BookCoverService
         return ['bytes' => $bytes, 'mime' => self::detect($bytes) === 'png' ? 'image/png' : 'image/jpeg'];
     }
 
-    /** El tipo se valida por contenido (firma del archivo), no por extensión. */
+    /** The type is checked by content (file signature), not by extension. */
     public static function detect(string $bytes): ?string
     {
         if (str_starts_with($bytes, "\x89PNG\r\n\x1a\n")) {

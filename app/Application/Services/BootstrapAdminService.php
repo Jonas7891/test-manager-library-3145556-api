@@ -6,7 +6,7 @@ use App\Application\Ports\PasswordHasher;
 use App\Application\Ports\UserRepository;
 use App\Domain\User;
 
-/** D-10: crea el admin inicial desde el entorno; idempotente. */
+/** D-10: creates the initial admin from the environment; idempotent. */
 final class BootstrapAdminService
 {
     public function __construct(
@@ -14,7 +14,7 @@ final class BootstrapAdminService
         private readonly PasswordHasher $hasher,
     ) {}
 
-    /** @return bool true si lo creó, false si ya existía */
+    /** @return bool true if it was created, false if it already existed */
     public function ensure(string $username, string $password): bool
     {
         if ($this->users->findByUsername(User::normalizeUsername($username)) !== null) {

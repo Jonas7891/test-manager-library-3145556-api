@@ -12,7 +12,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Illuminate\Http\JsonResponse;
 
-/** Forma JSON del contrato: snake_case, fechas ISO 8601 UTC con Z, sin secretos. */
+/** Contract JSON shape: snake_case, ISO 8601 UTC dates with Z, no secrets. */
 final class Presenter
 {
     public static function json(mixed $data, int $status = 200): JsonResponse

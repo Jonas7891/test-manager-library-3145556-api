@@ -9,7 +9,7 @@ use App\Application\Ports\MemberRepository;
 use App\Domain\Exceptions\NotFound;
 use App\Domain\Loan;
 
-/** HU-06: presta y no hace nada más. */
+/** HU-06: lends and does nothing else. */
 final class LendBooksService
 {
     public function __construct(

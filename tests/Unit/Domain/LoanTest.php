@@ -16,7 +16,7 @@ use App\Domain\ValueObjects\Quantity;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
-/** T-05: el reloj es un valor fijo, no hace falta esperar 14 días. */
+/** T-05: the clock is a fixed value, so there is no need to wait 14 days. */
 final class LoanTest extends TestCase
 {
     private DateTimeImmutable $now;

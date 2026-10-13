@@ -7,7 +7,7 @@ use App\Application\Ports\LoanRepository;
 use App\Domain\Exceptions\NotFound;
 use App\Domain\LoanItem;
 
-/** HU-07: devuelve una línea a la vez. */
+/** HU-07: returns one line at a time. */
 final class ReturnItemService
 {
     public function __construct(

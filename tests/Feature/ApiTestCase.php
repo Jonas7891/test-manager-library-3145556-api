@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
-/** Base de las pruebas de contrato: API real contra PostgreSQL real (plan §3). */
+/** Base of the contract tests: real API against a real PostgreSQL (plan §3). */
 abstract class ApiTestCase extends TestCase
 {
     use RefreshDatabase;

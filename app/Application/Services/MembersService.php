@@ -10,7 +10,7 @@ use App\Domain\Exceptions\NotFound;
 use App\Domain\Member;
 use App\Domain\ValueObjects\DocumentNumber;
 
-/** HU-05: los socios se crean y se consultan; no se eliminan. */
+/** HU-05: members are created and looked up; they are never deleted. */
 final class MembersService
 {
     public function __construct(

@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Application\Services\BootstrapAdminService;
 use Illuminate\Console\Command;
 
-/** D-10: el admin inicial lo crea el arranque desde ADMIN_USERNAME / ADMIN_PASSWORD. */
+/** D-10: startup creates the initial admin from ADMIN_USERNAME / ADMIN_PASSWORD. */
 final class BootstrapAdminCommand extends Command
 {
     protected $signature = 'library:bootstrap-admin';

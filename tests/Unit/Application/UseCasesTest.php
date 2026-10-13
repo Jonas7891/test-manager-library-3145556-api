@@ -23,7 +23,7 @@ use App\Domain\Exceptions\ValidationFailed;
 use PHPUnit\Framework\TestCase;
 use Tests\Fakes\InMemory;
 
-/** T-07 a T-11: casos de uso contra fakes, sin base de datos ni framework. */
+/** T-07 to T-11: use cases against fakes, with no database or framework. */
 final class UseCasesTest extends TestCase
 {
     private InMemory $w;

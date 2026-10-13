@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-// ADR-001 / H-08: el esquema lo crea la aplicación, no infra.
+// ADR-001 / H-08: the application creates the schema, not infra.
 return new class extends Migration
 {
     public function up(): void

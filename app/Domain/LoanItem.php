@@ -5,7 +5,7 @@ namespace App\Domain;
 use App\Domain\Exceptions\ItemAlreadyReturned;
 use DateTimeImmutable;
 
-/** Línea de préstamo: título, ISBN y categoría quedan congelados (RN-4). */
+/** Loan line: title, ISBN and category are frozen (RN-4). */
 final class LoanItem
 {
     public function __construct(
@@ -18,7 +18,7 @@ final class LoanItem
         public ?DateTimeImmutable $returnedAt = null,
     ) {}
 
-    /** CA-07.2: devolver dos veces es un error, nunca suma dos veces. */
+    /** CA-07.2: returning twice is an error; it never adds the copy twice. */
     public function markReturned(DateTimeImmutable $now): void
     {
         if ($this->returnedAt !== null) {

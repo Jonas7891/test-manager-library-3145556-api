@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Application\Ports\Clock;
 use App\Adapters\Outbound\Clock\SystemClock;
 
-/** T-16 (parte 2): HU-06 a HU-10 contra la API real. */
+/** T-16 (part 2): HU-06 to HU-10 against the real API. */
 final class LoansContractTest extends ApiTestCase
 {
     private function lend(array $h, string $member, array $books)

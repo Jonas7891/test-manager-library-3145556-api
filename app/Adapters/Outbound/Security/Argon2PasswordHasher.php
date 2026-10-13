@@ -4,7 +4,7 @@ namespace App\Adapters\Outbound\Security;
 
 use App\Application\Ports\PasswordHasher;
 
-/** D-09: Argon2id. La clave en claro nunca se guarda ni se registra. */
+/** D-09: Argon2id. The plain password is never stored or logged. */
 final class Argon2PasswordHasher implements PasswordHasher
 {
     public function hash(string $plain): string

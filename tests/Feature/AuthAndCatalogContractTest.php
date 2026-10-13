@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-/** T-16 (parte 1): HU-01 a HU-05 contra la API real. */
+/** T-16 (part 1): HU-01 to HU-05 against the real API. */
 final class AuthAndCatalogContractTest extends ApiTestCase
 {
     public function test_health_is_public_t_01(): void

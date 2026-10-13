@@ -1,6 +1,6 @@
 <?php
 
-// Configuración por entorno de Manager Library (plan §2). Ningún secreto tiene valor por defecto.
+// Manager Library configuration from the environment (plan §2). No secret has a default value.
 return [
     'jwt_secret' => env('JWT_SECRET'),
     'admin_username' => env('ADMIN_USERNAME'),

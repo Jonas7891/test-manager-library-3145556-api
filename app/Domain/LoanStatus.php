@@ -2,7 +2,7 @@
 
 namespace App\Domain;
 
-/** Estado calculado del préstamo (Art. VII): nunca se almacena. */
+/** Computed loan status (Art. VII): never stored. */
 enum LoanStatus: string
 {
     case Open = 'open';
